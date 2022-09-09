@@ -268,15 +268,22 @@ public class BranchSDK extends CordovaPlugin {
     private void initSession(CallbackContext callbackContext) {
 
         this.activity = this.cordova.getActivity();
-
-        Uri data = activity.getIntent().getData();
-
-        if (data != null && data.isHierarchical()) {
-            this.deepLinkUrl = data.toString();
+        Intent intent = activity.getIntent();
+        Uri data = intent.getData();
+    
+        if(1 != intent.getIntExtra("branchAgain", 0)) {
+          intent.putExtra("branchAgain", 1);
+          activity.setIntent(new Intent());
+        } else {
+          return;
         }
-
+    
+        if (data != null && data.isHierarchical()) {
+          this.deepLinkUrl = data.toString();
+        }
+    
         this.instance.initSession(new SessionListener(callbackContext), data, activity);
-    }
+      }
 
     /**
      * <p>This method should be called if you know that a different person is about to use the app. For example,
