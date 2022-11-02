@@ -271,7 +271,7 @@ public class BranchSDK extends CordovaPlugin {
         Intent intent = activity.getIntent();
         Uri data = intent.getData();
     
-        if(1 != intent.getIntExtra("branchAgain", 0)) {
+        if(intent.getExtras() != null && !intent.getExtras().containsKey("google.message_id") && 1 != intent.getIntExtra("branchAgain", 0)) {
           intent.putExtra("branchAgain", 1);
           activity.setIntent(new Intent());
         } else {
