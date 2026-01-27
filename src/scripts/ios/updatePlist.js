@@ -15,6 +15,10 @@
     const filePath = `platforms/ios/${preferences.projectName}/${
       preferences.projectName
     }-Info.plist`;
+      if (!fs.existsSync(filePath)) {
+        console.warn('Info.plist not found yet, skipping Branch plist update');
+        return;
+    }
     let xml = readPlist(filePath);
     let obj = convertXmlToObject(xml);
 
