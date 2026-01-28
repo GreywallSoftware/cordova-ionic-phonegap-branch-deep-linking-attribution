@@ -3,6 +3,8 @@
 
   const fs = require("fs");
   const plist = require("plist");
+  const path = require('path');
+  const glob = require('glob');
   const SDK = "branch-cordova-sdk";
 
   // entry
@@ -12,9 +14,16 @@
 
   // updates the platforms/ios/app.plist file with branch settings within app/config.xml
   function addBranchSettings(preferences) {
-    const filePath = `platforms/ios/${preferences.projectName}/${
-      preferences.projectName
-    }-Info.plist`;
+    // const filePath = `platforms/ios/${preferences.projectName}/${
+    //   preferences.projectName
+    // }-Info.plist`;
+    const matches = glob.sync('platforms/ios/**/**-Info.plist');
+    if (!matches.length) {
+      throw new Error('Info.plist not found under platforms/ios');
+    }
+
+    const filePath = matches[0];
+    console.log('Using Info.plist at:', filePath);
       if (!fs.existsSync(filePath)) {
         console.warn('Info.plist not found yet, skipping Branch plist update');
         return;
