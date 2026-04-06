@@ -39,7 +39,7 @@
         preferences.projectRoot,
         "platforms",
         "ios",
-        preferences.projectName,
+        "App",
         `Entitlements-${buildType}.plist`
       );
       files.push(plist);
